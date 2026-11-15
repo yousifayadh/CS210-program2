@@ -37,7 +37,7 @@ private:
         {
             return 0;
         }
-        if (scene->IsEnding())
+        if (scene->isEnding())
         {
              count = 1;
         }
