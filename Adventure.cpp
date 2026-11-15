@@ -71,7 +71,8 @@ bool Adventure::load(const std::string& fileName) {
         return false;
     }
     std::string line;
-    if (!readField(in, "START_HP", line)) {
+    if (!readField(in, "START_HP", line))
+    {
         return false;
     }
     startHp_ = std::stoi(line);
@@ -220,7 +221,70 @@ int Adventure::askChoice(int numChoices) {
 //   Inventory (<count> items):
 // and then print the bag.
 // The bag is a List<Item>. Start with HP = startHp_ and loot = 0.
-void Adventure::play() {
+void Adventure::play()
+{
+    int hp = startHp_;
+    int loot = 0;
+    List<Item> bag;
+
+    Scene<Moment>* current = tree_.getRoot();
+
+    while (current != nullptr)
+    {
+        hp += current ->getData()->getHpChange();
+        loot+=current->getData()->getLoot();
+
+        std::cout << "----------------------------------------"<< std::endl;
+
+        std::cout << current ->getData()->getText() << std::endl;
+
+        if (current ->getData()->hasItem())
+        {
+            Item item (current->getData()->getItem());
+
+            if (bag.search(item))
+            {
+                std::cout << "You already have: " << item.getName() << std::endl;
+            }
+            else
+            {
+                bag.addFront(new Item(item));
+
+                std::cout << "You picked up: " << item.getName() << std::endl;
+            }
+
+        }
+        std::cout<< "HP: " << hp << "  Loot: " << loot << std::endl;
+
+        if (hp <= 0)
+        {
+            std::cout<< "Your HP hit 0. GAME OVER." << std::endl;
+            break;
+        }
+
+        if (current->isEnding())
+        {
+            std::cout << "THE END." << std::endl;
+            break;
+        }
+
+        for (int i = 0; i < current-> getNumChoices(); i++)
+        {
+            std::cout << "[" << i + 1 << "] " << current->getChoice(i)->getData()->getLabel() << std::endl;
+        }
+
+        int choice = askChoice (current->getNumChoices());
+
+        if (choice == 0)
+        {
+            return;
+        }
+        current = current-> getChoice(choice - 1);
+    }
+    std::cout << "Final HP: " << hp << "  Final loot: " << loot << std::endl;
+    std::cout << "Inventory (" << bag.size() << " items):" << std::endl;
+    bag.print();
+
 }
 
 // ===================== ANALYZING =====================
@@ -230,6 +294,9 @@ void Adventure::play() {
 //   Endings: <count>
 //   Longest playthrough: <height> choices
 void Adventure::printStats() const {
+    std::cout << "Scenes: " << tree_.countScenes() << std::endl;
+    std::cout << "Endings: " << tree_.countEndings() << std::endl;
+    std::cout << "Longest playthrough: " << tree_.height() << " choices" <<std::endl;
 }
 
 // TODO 15: print every ending in the story, one per line.

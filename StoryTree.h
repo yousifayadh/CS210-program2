@@ -23,7 +23,8 @@ private:
             return 0;
         }
         int count = 1;
-        for (int i = 0; i < scene->getNumChoices(); i++) {
+        for (int i = 0; i < scene->getNumChoices(); i++)
+        {
             count += countScenes(scene->getChoice(i));
         }
         return count;
