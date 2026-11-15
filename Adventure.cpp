@@ -200,7 +200,7 @@ int Adventure::askChoice(int numChoices) {
 
         }
 
-        std::cout << "Please type a number from 1 to " << numChoices << std::endl;
+        std::cout << "Please type a number from 1 to " << numChoices << "." << std::endl;
     }
 }
 
@@ -301,6 +301,7 @@ void Adventure::printStats() const {
 
 // TODO 15: print every ending in the story, one per line.
 void Adventure::printSpoilers() const {
+    printEndings (tree_.getRoot(), "");
 }
 
 // TODO 16: print every ending below scene.
@@ -310,7 +311,29 @@ void Adventure::printSpoilers() const {
 // If the very first scene is an ending, print "Path (start): <scene text>".
 // Endings print in order: choice 1 before choice 2 before choice 3.
 void Adventure::printEndings(Scene<Moment>* scene, const std::string& path) const {
+    if (scene == nullptr)
+    {
+        return;
+    }
+
+    if (scene->isEnding())
+    {
+        if (path.empty())
+        {
+            std::cout<< "Path (start): " << scene->getData()->getText() << std::endl;
+        }
+        else
+        {
+            std::cout << "Path " << path << ": " << scene->getData()->getText() << std::endl;
+        }
+        return;
+    }
+    for (int i = 0; i < scene->getNumChoices(); i++)
+    {
+        printEndings(scene->getChoice(i), extendPath(path, i+ 1));
+    }
 }
+
 
 // TODO 17: the greedy advisor.
 // Start at the first scene with startHp_ and 0 loot.
@@ -324,6 +347,53 @@ void Adventure::printEndings(Scene<Moment>* scene, const std::string& path) cons
 //     Loot: <loot>
 //     Result: died               (or "Result: reached an ending")
 void Adventure::greedyRun() const {
+    int hp = startHp_;
+    int loot = 0;
+    std::string path = "";
+    Scene<Moment>* current = tree_.getRoot();
+
+    while (current != nullptr)
+    {
+        hp += current ->getData()->getHpChange();
+        loot += current->getData()->getLoot();
+
+        if (hp <= 0 || current->isEnding())
+        {
+            break;
+        }
+
+        int theIndex = 0;
+        int bestChoiceLoot = current-> getChoice(0)->getData()->getLoot();
+
+        for (int i = 1; i < current->getNumChoices(); i++)
+        {
+            int theLoot = current->getChoice(i)->getData()->getLoot();
+            if (theLoot > bestChoiceLoot)
+            {
+                bestChoiceLoot = theLoot;
+                theIndex = i;
+            }
+        }
+        path = extendPath(path, theIndex + 1);
+        current = current-> getChoice(theIndex);
+    }
+
+    if (path.empty())
+    {
+        path = "(start)";
+    }
+    std::cout << "Greedy advisor" << std::endl;
+    std::cout << "  Path: " << path << std::endl;
+    std::cout << "  Loot: " << loot << std::endl;
+
+    if (hp <= 0)
+    {
+        std::cout << "  Result: died" << std::endl;
+    }
+    else
+    {
+        std::cout << "  Result: reached an ending" << std::endl;
+    }
 }
 
 // TODO 18: the best total loot you can collect from scene down to an ending,
