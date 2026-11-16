@@ -1,0 +1,90 @@
+START_HP 100
+SCENE You go to a movie theater
+HP 0
+LOOT 30
+ITEM none
+CHOICES 3
+LABEL Get a free popcorn bucket and go home 
+  SCENE You don't watch a movie. At least you have this cool bucket though!
+  HP 0
+  LOOT 30
+  ITEM Cool popcorn bucket
+  CHOICES 0
+LABEL Go watch The Hulk
+  SCENE The movie starts and, suddenly, the screen becomes a portal and you get transported into the movie. You're in a building with two doors, one that takes you towards Hulk and one that takes you away.
+  HP -10
+  LOOT 10
+  ITEM none
+  CHOICES 2
+  LABEL Run towards Hulk
+    SCENE Hulk stomps on you then throws you towards the Sun.
+    HP -1100
+    LOOT 0
+    ITEM none
+    CHOICES 0
+  LABEL Run to the door that takes you away from Hulk
+    SCENE Hulk somehow jumps over the building and still lands on you.
+    HP -200
+    LOOT 0
+    ITEM none
+    CHOICES 0
+LABEL Go to the Spider-Man movie
+  SCENE You are suddenly falling. You see a weird button that you wear around your arm (webshooter). 
+  HP 0
+  LOOT 0
+  ITEM web shooter
+  CHOICES 2
+  LABEL Don't press the button
+    SCENE You fall to your death. RIP.
+    HP -100
+    LOOT 0
+    ITEM none
+    CHOICES 0
+  LABEL Press the button
+    SCENE It's a web shooter! You now swing off of a building onto the roof of another building. Then, you feel this sensation that something is going to happen.
+    HP 0
+    LOOT 10
+    ITEM none
+    CHOICES 2
+    LABEL Ignore the sensation
+      SCENE A meteor that was incoming lands on you. RIP.
+      HP -1100
+      LOOT 0
+      ITEM none
+      CHOICES 0
+    LABEL Listen to the sensation
+      SCENE You look up and see a meteor, then quickly jump off the building and swing. Then, you safely land on the ground and find a guy stealing someone's purse. You fight that guy. 
+      HP 0
+      LOOT 20
+      ITEM none
+      CHOICES 1
+      LABEL Win the fight
+        SCENE Congrats! Your first fight as Spider-Man. You decide to go to a store and get a soda.
+        HP -50
+        LOOT 50
+        ITEM none
+        CHOICES 2
+        LABEL Steal it
+          SCENE That's illegal. The cops arrest you.
+          HP 0
+          LOOT 0
+          ITEM none
+          CHOICES 0
+       LABEL Pay for it
+         SCENE You pay for it; but, before you leave, you see the cashier being robbed. 
+         HP 0
+         LOOT 0
+         ITEM Soda
+         CHOICES 1
+         LABEL Protect the cashier
+           SCENE You fight the robber and use your webs to make him stuck to the wall. The cashier is thankful and gives you a bag of chips. You do feel hungry and thirsty.
+           HP -10
+           LOOT 30
+           ITEM Chips
+           CHOICES 1
+           LABEL Eat the chips and drink the soda
+             SCENE After you eat the chips and drink the soda, you feel like you're floating. You look up and there's a portal. You go in the portal and find yourself in the theater. They were magic chips and soda. You think this movie sucks and rate it 1/10. 
+             HP 30
+             LOOT 100
+             ITEM none
+             CHOICES 0
