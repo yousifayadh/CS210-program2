@@ -7,7 +7,7 @@ CHOICES 3
 LABEL Get a free popcorn bucket and go home 
   SCENE You don't watch a movie. At least you have this cool bucket though!
   HP 0
-  LOOT 30
+  LOOT 0
   ITEM Cool popcorn bucket
   CHOICES 0
 LABEL Go watch The Hulk
@@ -83,7 +83,7 @@ LABEL Go to the Spider-Man movie
            ITEM Chips
            CHOICES 1
            LABEL Eat the chips and drink the soda
-             SCENE After you eat the chips and drink the soda, you feel like you're floating. You look up and there's a portal. You go in the portal and find yourself in the theater. They were magic chips and soda. You think this movie sucks and rate it 1/10. 
+             SCENE After you eat the chips and drink the soda, you feel like you're floating. You look up and there's a portal. You go in the portal and find yourself in the theater. They were magic chips and soda. You think this movie sucks and rate it 1/10 on letterboxd (You're a very pretentious movie critic who hates fun).
              HP 30
              LOOT 100
              ITEM none

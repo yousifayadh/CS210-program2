@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
     // Uncomment this block once your Scene, StoryTree, and Adventure compile.
     // Do not change it.
 
-     Adventure game;
+    Adventure game;
     if (!game.load(argv[1])) {
         return 1;
     }
